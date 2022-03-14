@@ -118,13 +118,13 @@ class App extends Component {
           {[0,1,2,3,4,5].map(row => <Board letters={this.state.board[row]}/>)}
           <div>
             <div>
-              {['A','B','C','D','E','F','G','H','I'].map(l =><Letter name={l} onClickFunc={this.selectLetter} usedLetters={this.state.usedLetters}/>)}
+              {['Q','W','E','R','T','Y','U','I','O', 'P'].map(l =><Letter name={l} onClickFunc={this.selectLetter} usedLetters={this.state.usedLetters}/>)}
             </div>
             <div>
-              {['J','K','L','M','N','O','P','Q','R'].map(l =><Letter name={l} onClickFunc={this.selectLetter} usedLetters={this.state.usedLetters}/>)}
+              {['A','S','D','F','G','H','J','K','L'].map(l =><Letter name={l} onClickFunc={this.selectLetter} usedLetters={this.state.usedLetters}/>)}
             </div>
             <div>
-              {['S','T','U','V','W','X','Y','Z'].map(l =><Letter name={l} onClickFunc={this.selectLetter} usedLetters={this.state.usedLetters}/>)}
+              {['Z','X','C','V','B','N','M'].map(l =><Letter name={l} onClickFunc={this.selectLetter} usedLetters={this.state.usedLetters}/>)}
             </div>
             <div>
               <Letter name={'back'} onClickFunc={this.backLetter} usedLetters={[]}/>

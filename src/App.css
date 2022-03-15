@@ -15,20 +15,38 @@
   line-height: 45px;
 }
 
-.boardLine div.green {
+.letters {
+  margin-top: 20px;
+}
+
+@keyframes toGreen {
+  0%   {background-color: white;}
+  100% {background-color: #07bc0c;}
+}
+@keyframes toYellow {
+  0%   {background-color: white;}
+  100% {background-color: #c9b458;}
+}
+.boardLine div.toGreenAnim {
   background-color: #07bc0c;
+  animation-name: toGreen;
+  animation-duration: 1s;
   color: white;
   border: 0;
   height: 49px;
   width: 49px;
 }
-.boardLine div.yellow {
+
+.boardLine div.toYellowAnim {
   background-color: #c9b458;
+  animation-name: toYellow;
+  animation-duration: 1s;
   color: white;
   border: 0;
   height: 49px;
   width: 49px;
 }
+
 .boardLine div.grey {
   background-color: #787c7e;
   color: white;

@@ -68,7 +68,8 @@ class App extends Component {
     this.setState({...this.state, word: randWord, attempt: 0, win: false, warning: '', usedLetters: [],  board: this.getEmptyBoard()});
   }
 
-  completeWord = () => {
+
+  completeWord = async () => {
     let warning = '';
     if (this.cantPlay()) return;
 
@@ -84,29 +85,33 @@ class App extends Component {
     if (!exist) {
       warning = `${word}  - this word does not exist`;
     } else {
-      word.split('').forEach((letter, index) => {
-        if (letter === this.state.word[index]) {
-          currentBoard[index].color = 'green';
-        } else {
-          const words = this.state.word.split('');
-          const otherPlace = words.find(w => w === letter)
-          currentBoard[index].color = (otherPlace) ? 'yellow' : 'grey';
-          if (!otherPlace) {
-            usedLetters.push(letter);
-          }
+      let letter;
+      for (let index = 0; index < word.length; index++) {
+      letter = word[index];
+      await new Promise(resolve => setTimeout(resolve, 100));
+      if (letter === this.state.word[index]) {
+        currentBoard[index].color = 'toGreenAnim';
+      } else {
+        const words = this.state.word.split('');
+        const otherPlace = words.find(w => w === letter)
+        currentBoard[index].color = (otherPlace) ? 'toYellowAnim' : 'grey';
+        if (!otherPlace) {
+          usedLetters.push(letter);
         }
-      })
+      }
+      this.setState({...this.state, board: newboard});
     }
-    const win = word === this.state.word;
-    const attempt = exist ? this.state.attempt + 1 : this.state.attempt ;
+  }
+  const win = word === this.state.word;
+  const attempt = exist ? this.state.attempt + 1 : this.state.attempt ;
 
-    if(attempt > 5) {
-      warning = `You lost. Word: ${this.state.word.toUpperCase()}`;
-    }
-    if(win) {
-      warning = 'You won!';
-    }
-    this.setState({...this.state, board: newboard, attempt: attempt, win: win, warning: warning, usedLetters: usedLetters});
+  if(attempt > 5) {
+    warning = `You lost. Word: ${this.state.word.toUpperCase()}`;
+  }
+  if(win) {
+    warning = 'You won!';
+  }
+  this.setState({...this.state, board: newboard, attempt: attempt, win: win, warning: warning, usedLetters: usedLetters});
   }
 
   render() {
@@ -116,7 +121,7 @@ class App extends Component {
           <h3>{this.state.warning}</h3>
           {(this.cantPlay()) && <Letter name={'New game'} onClickFunc={this.newGame} usedLetters={[]}/>}
           {[0,1,2,3,4,5].map(row => <Board letters={this.state.board[row]}/>)}
-          <div>
+          <div className={'letters'}>
             <div>
               {['Q','W','E','R','T','Y','U','I','O', 'P'].map(l =><Letter name={l} onClickFunc={this.selectLetter} usedLetters={this.state.usedLetters}/>)}
             </div>

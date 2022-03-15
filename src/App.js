@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {PATH_TO_WORDS_FILE} from './constants';
 import Letter from './components/Letter'
 import Board from './components/Board'
 import './App.css';
@@ -19,7 +20,7 @@ class App extends Component {
     };
   }
   componentWillMount() {
-    fetch("/words.txt")
+    fetch(PATH_TO_WORDS_FILE)
         .then(res => res.json())
         .then(
             (result) => {
@@ -38,9 +39,7 @@ class App extends Component {
     })
   }
 
-  cantPlay = () => {
-    return (this.state.win || (this.state.attempt > 5));
-  }
+  cantPlay = () => (this.state.win || (this.state.attempt > 5));
 
   selectLetter = (name) => {
     if (this.cantPlay()) return;
@@ -87,20 +86,20 @@ class App extends Component {
     } else {
       let letter;
       for (let index = 0; index < word.length; index++) {
-      letter = word[index];
-      await new Promise(resolve => setTimeout(resolve, 100));
-      if (letter === this.state.word[index]) {
-        currentBoard[index].color = 'toGreenAnim';
-      } else {
-        const words = this.state.word.split('');
-        const otherPlace = words.find(w => w === letter)
-        currentBoard[index].color = (otherPlace) ? 'toYellowAnim' : 'grey';
-        if (!otherPlace) {
-          usedLetters.push(letter);
+        letter = word[index];
+        await new Promise(resolve => setTimeout(resolve, 100));
+        if (letter === this.state.word[index]) {
+          currentBoard[index].color = 'toGreenAnim';
+        } else {
+          const words = this.state.word.split('');
+          const otherPlace = words.find(w => w === letter)
+          currentBoard[index].color = (otherPlace) ? 'toYellowAnim' : 'grey';
+          if (!otherPlace) {
+            usedLetters.push(letter);
+          }
         }
+        this.setState({...this.state, board: newboard});
       }
-      this.setState({...this.state, board: newboard});
-    }
   }
   const win = word === this.state.word;
   const attempt = exist ? this.state.attempt + 1 : this.state.attempt ;

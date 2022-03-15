@@ -1,0 +1,1 @@
+export const PATH_TO_WORDS_FILE = '/words.txt';
